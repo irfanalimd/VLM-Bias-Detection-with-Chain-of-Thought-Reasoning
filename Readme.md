@@ -210,11 +210,10 @@ Our evaluation includes:
 - ✅ 73% reduction in inference costs vs. full-precision models
 - ✅ Reveals 22% competence score gap between demographics
 - ✅ Human-interpretable reasoning with 4.1/5 clarity rating
+## Architecture
 
-##  Architecture
-
-```
 ![Pipeline Diagram](https://github.com/irfanalimd/VLM-Bias-Detection-with-Chain-of-Thought-Reasoning/blob/main/pipeline.jpg?raw=true)
+
 
 ┌─────────────────────────────────────────┐
 │         Input: Image + Caption         │
