@@ -122,7 +122,7 @@ python scripts/generate_cot_labels.py \
   --batch_size 10
 ```
 
-## 🎓 Training
+##  Training
 
 ### Fine-tune LLaMA-V-O1
 
@@ -273,7 +273,7 @@ curl -X POST http://localhost:8000/analyze \
   }'
 ```
 
-## 🧪 Running Tests
+##  Running Tests
 
 ```bash
 pytest tests/ -v --cov=src
