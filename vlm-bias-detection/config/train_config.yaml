@@ -1,0 +1,114 @@
+# Configuration for fine-tuning LlamaV-o1 on gender bias detection task
+
+# Model information
+model_name: "omkarthawakar/LlamaV-o1"  # HuggingFace model ID for LlamaV-o1
+
+# Data paths
+train_data: "data/processed/train_annotations.jsonl"  # Path to training data
+validation_data: "data/processed/val_annotations.jsonl"  # Path to validation data
+image_dir: "data/images"  # Directory containing images
+
+# Output settings
+output_dir: "models/llamav_o1_bias_detector"  # Directory to save model checkpoints
+
+# Training hyperparameters
+seed: 42  # Random seed for reproducibility
+num_epochs: 5  # Number of training epochs (changed from 3 to 5 for better results)
+batch_size: 4  # Batch size for training and evaluation
+gradient_accumulation_steps: 4  # Accumulate gradients over multiple steps (effective batch size = batch_size * gradient_accumulation_steps = 16)
+learning_rate: 2e-5  # Learning rate
+weight_decay: 0.01  # Weight decay for regularization
+warmup_steps: 100  # Number of warmup steps for learning rate scheduler
+max_length: 512  # Maximum sequence length for tokenization
+
+# Logging and checkpointing
+logging_steps: 10  # Log training metrics every N steps
+save_steps: 100  # Save checkpoint every N steps
+save_total_limit: 3  # Maximum number of checkpoints to keep (changed from 2 to 3)
+eval_steps: 100  # Evaluate model every N steps
+report_to: "tensorboard"  # Report training metrics to TensorBoard
+
+# Performance optimization
+fp16: true  # Use mixed precision training if available
+gradient_checkpointing: false  # Use gradient checkpointing to save memory (set to true if OOM)
+dataloader_num_workers: 4  # Number of workers for data loading
+dataloader_pin_memory: true  # Pin memory for faster data transfer to GPU
+
+# LoRA configuration (Low-Rank Adaptation settings for efficient fine-tuning)
+lora_config:
+  r: 8  # LoRA attention dimension (rank)
+  lora_alpha: 16  # LoRA alpha parameter (scaling factor)
+  target_modules: ["q_proj", "v_proj"]  # Modules to apply LoRA to
+  lora_dropout: 0.05  # Dropout probability for LoRA layers
+  bias: "none"  # Add bias to the LoRA layers ("none", "all", or "lora_only")
+  task_type: "CAUSAL_LM"  # Task type for language models
+
+# Optimizer settings
+optimizer: "adamw_torch"  # Optimizer type (adamw_torch, adamw_hf, sgd)
+adam_beta1: 0.9  # Adam beta1 parameter
+adam_beta2: 0.999  # Adam beta2 parameter
+adam_epsilon: 1.0e-8  # Adam epsilon parameter
+max_grad_norm: 1.0  # Maximum gradient norm for clipping
+
+# Learning rate scheduler
+lr_scheduler_type: "linear"  # Learning rate scheduler type (linear, cosine, constant)
+warmup_ratio: 0.0  # Warmup ratio (alternative to warmup_steps)
+
+# Early stopping (optional)
+early_stopping_patience: 3  # Stop training if no improvement for N evaluations
+early_stopping_threshold: 0.0  # Minimum improvement to consider as better
+
+# Evaluation strategy
+evaluation_strategy: "steps"  # When to evaluate (steps, epoch, no)
+load_best_model_at_end: true  # Load best model at end of training
+metric_for_best_model: "eval_loss"  # Metric to use for best model selection
+greater_is_better: false  # Whether higher metric is better
+
+# Additional training settings
+remove_unused_columns: false  # Keep all columns in dataset
+label_smoothing_factor: 0.0  # Label smoothing factor
+push_to_hub: false  # Push model to HuggingFace Hub after training
+hub_model_id: null  # Model ID for HuggingFace Hub (if push_to_hub is true)
+
+# Debugging and testing
+debug_mode: false  # Enable debug mode (limits dataset size)
+max_train_samples: null  # Maximum number of training samples (null = all)
+max_eval_samples: null  # Maximum number of evaluation samples (null = all)
+
+# Distributed training (if using multiple GPUs)
+local_rank: -1  # Local rank for distributed training (-1 = not distributed)
+ddp_backend: "nccl"  # Backend for DistributedDataParallel
+ddp_find_unused_parameters: false  # Find unused parameters in DDP
+
+# Logging configuration
+logging_dir: "models/llamav_o1_bias_detector/logs"  # Directory for logs
+logging_first_step: true  # Log metrics for first training step
+logging_nan_inf_filter: true  # Filter out NaN/Inf values in logs
+
+# Model saving
+save_strategy: "steps"  # When to save (steps, epoch, no)
+save_on_each_node: false  # Save checkpoint on each node in distributed training
+
+# Additional features
+include_inputs_for_metrics: false  # Include inputs when computing metrics
+auto_find_batch_size: false  # Automatically find largest batch size
+full_determinism: false  # Enable full determinism (may impact performance)
+
+# Resume from checkpoint
+resume_from_checkpoint: null  # Path to checkpoint to resume from (null = start fresh)
+
+# Weights & Biases integration (optional)
+# Uncomment and configure if using W&B for experiment tracking
+# wandb_project: "vlm-bias-detection"  # W&B project name
+# wandb_entity: "your-username"  # W&B entity/username
+# wandb_run_name: null  # W&B run name (null = auto-generate)
+
+# Memory optimization
+optim: "adamw_torch"  # Optimizer (can use "adamw_bnb_8bit" for 8-bit optimization)
+per_device_train_batch_size: 4  # Same as batch_size
+per_device_eval_batch_size: 4  # Evaluation batch size
+
+# Training control
+ignore_data_skip: false  # Skip data that caused errors in previous run
+disable_tqdm: false  # Disable progress bar
+prediction_loss_only: false  # Only compute loss during evaluation
