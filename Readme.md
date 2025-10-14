@@ -1,4 +1,4 @@
-# Reasoning in VLM for Bias Detection
+# VLM-Bias-Detection-with-Chain-of-Thought-Reasoning
 
 ##  Key Features
 
