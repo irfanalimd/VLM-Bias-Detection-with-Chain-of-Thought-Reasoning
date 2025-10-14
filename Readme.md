@@ -214,6 +214,8 @@ Our evaluation includes:
 ##  Architecture
 
 ```
+![Pipeline Diagram](https://github.com/irfanalimd/VLM-Bias-Detection-with-Chain-of-Thought-Reasoning/blob/main/pipeline.jpg?raw=true)
+
 ┌─────────────────────────────────────────┐
 │         Input: Image + Caption         │
 └───────────────┬─────────────────────────┘
