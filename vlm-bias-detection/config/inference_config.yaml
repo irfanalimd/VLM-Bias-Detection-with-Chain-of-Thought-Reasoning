@@ -1,0 +1,82 @@
+# Configuration for inference with the fine-tuned model
+
+# Model configuration
+model_path: "models/llamav_o1_bias_detector/final"  # Path to fine-tuned model
+device: "cuda"  # Device to run on (cuda or cpu)
+
+# Generation parameters
+max_new_tokens: 512  # Maximum number of tokens to generate
+temperature: 1.0  # Sampling temperature (1.0 = no change)
+top_p: 1.0  # Nucleus sampling parameter
+top_k: 50  # Top-k sampling parameter
+do_sample: false  # Whether to use sampling (false = greedy decoding)
+num_beams: 1  # Number of beams for beam search
+
+# Batch processing
+batch_size: 8  # Batch size for inference
+num_workers: 4  # Number of data loading workers
+
+# Input/Output paths
+input_file: "data/processed/test_annotations.jsonl"  # Input data file
+output_file: "results/predictions.jsonl"  # Output predictions file
+image_dir: "data/images"  # Directory containing images
+
+# Performance optimization
+fp16: true  # Use FP16 precision for faster inference
+use_cache: true  # Use key-value cache for generation
+
+# Logging
+log_level: "INFO"  # Logging level (DEBUG, INFO, WARNING, ERROR)
+log_file: "logs/inference.log"  # Log file path
+save_intermediate: false  # Save intermediate outputs
+
+# Rate limiting (for API usage)
+max_requests_per_minute: 60  # Maximum requests per minute
+request_timeout: 30  # Request timeout in seconds
+
+# Prompt template
+prompt_template: |
+  Analyze this image and caption for gender bias.
+  Caption: "{caption}"
+  
+  Provide your analysis following these steps:
+  1. Implication: What does the caption imply?
+  2. Bias Analysis: Does it contain gender-based assumptions?
+  3. Justification: Explain your reasoning.
+  4. Final Answer: Biased or Not Biased
+  
+  Analysis:
+
+# Post-processing
+parse_output: true  # Parse output to extract label
+validate_output: true  # Validate output format
+
+# Model-specific settings
+use_lora: true  # Whether model uses LoRA adapters
+lora_weights: "models/llamav_o1_bias_detector/final"  # Path to LoRA weights
+
+# Advanced settings
+seed: 42  # Random seed for reproducibility
+gradient_checkpointing: false  # Use gradient checkpointing (saves memory)
+max_batch_size: 16  # Maximum batch size allowed
+min_batch_size: 1  # Minimum batch size
+dynamic_batching: true  # Enable dynamic batching
+
+# Output formatting
+include_reasoning: true  # Include reasoning in output
+include_confidence: false  # Include confidence scores (if available)
+output_format: "jsonl"  # Output format (jsonl, json, csv)
+
+# Error handling
+continue_on_error: true  # Continue processing on errors
+max_retries: 3  # Maximum retries for failed samples
+retry_delay: 1  # Delay between retries (seconds)
+
+# Monitoring
+enable_metrics: true  # Enable performance metrics
+metrics_file: "logs/inference_metrics.jsonl"  # Metrics output file
+log_every_n_samples: 100  # Log progress every N samples
+
+# Resource limits
+max_memory_gb: 16  # Maximum GPU memory to use (GB)
+timeout_per_sample: 60  # Timeout per sample (seconds)
