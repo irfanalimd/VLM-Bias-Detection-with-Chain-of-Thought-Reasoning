@@ -214,31 +214,6 @@ Our evaluation includes:
 
 ![Pipeline Diagram](https://github.com/irfanalimd/VLM-Bias-Detection-with-Chain-of-Thought-Reasoning/blob/main/pipeline.jpg?raw=true)
 
-
-┌─────────────────────────────────────────┐
-│         Input: Image + Caption         │
-└───────────────┬─────────────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────┐
-│      Vision Encoder (CLIP ViT-L/14)    │
-└───────────────┬─────────────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────┐
-│   LLaMA-V-O1 (11B) + 4-bit LoRA       │
-└───────────────┬─────────────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────┐
-│     Chain-of-Thought Reasoning          │
-│  1. Implication Analysis                │
-│  2. Bias Detection                      │
-│  3. Justification                       │
-│  4. Final Label                         │
-└─────────────────────────────────────────┘
-```
-
 ##  Advanced Usage
 
 ### Custom Model Training
