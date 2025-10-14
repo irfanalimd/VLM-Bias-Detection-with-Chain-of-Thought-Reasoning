@@ -1,21 +1,5 @@
 # Data Directory
 
-This directory contains datasets for training and evaluating the VLM bias detection model.
-
-## Directory Structure
-
-```
-data/
-├── README.md                    # This file
-├── sample_data.jsonl           # Sample dataset (10 examples)
-├── prepare_data.py             # Data preprocessing script
-├── images/                     # Image files (not in repo)
-└── processed/                  # Processed datasets (not in repo)
-    ├── train_captions.jsonl    # Training captions (no labels)
-    ├── train_annotations.jsonl # Training data with CoT labels
-    ├── val_annotations.jsonl   # Validation data
-    └── test_annotations.jsonl  # Test data
-```
 
 ## Sample Data
 
@@ -361,3 +345,4 @@ If you use this data preparation pipeline:
 **Last Updated**: October 2024
 
 For the most up-to-date information, see the project documentation at [GitHub Repository].
+
