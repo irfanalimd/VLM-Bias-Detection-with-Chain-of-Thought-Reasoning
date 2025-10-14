@@ -218,3 +218,16 @@ def main():
     # Process data
     results = process_data(
         data, model, processor, args.
+        image_dir,
+        args.device, args.max_length, args.batch_size
+    )
+    # Save results
+save_results(results, args.output)
+
+# Print summary statistics
+bias_counts = {"Biased": 0, "Not Biased": 0, "Unclear": 0, "Error": 0}
+for result in results:
+    bias_label = result["bias_label"]
+    bias_counts[bias_label] = bias_counts.get(bias_label, 0) + 1
+
+logger.info(f"Bias distribution: {bias_counts}")
